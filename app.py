@@ -27,7 +27,7 @@ def home():
         elif algoritma == 'nb':
             model = joblib.load('static/model_ml/model_nb.pkl')
         elif algoritma == 'rf':
-            model = joblib.load('static/model_ml/model_rfb.pkl')
+            model = joblib.load('static/model_ml/model_rf.pkl')
 
         prediction = model.predict(features)
 
