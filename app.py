@@ -3,7 +3,6 @@ from flask import Flask, request, render_template
 import joblib
 
 app = Flask(__name__)
-model = joblib.load('static/model_ml/model_knn.pkl')
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
@@ -19,6 +18,17 @@ def home():
         sw = int(request.form['sw'])
         tt = int(request.form['tt'])
         features = [[battery, cam, memory, mwt, prh, prw, ram, sh, sw, tt]]
+
+        algoritma = request.form['algoritma']
+        if algoritma == 'knn':
+            model = joblib.load('static/model_ml/model_knn.pkl')
+        elif algoritma == 'dt':
+            model = joblib.load('static/model_ml/model_dt.pkl')
+        elif algoritma == 'nb':
+            model = joblib.load('static/model_ml/model_nb.pkl')
+        elif algoritma == 'rf':
+            model = model = joblib.load('static/model_ml/model_rfb.pkl')
+
         prediction = model.predict(features)
 
         return render_template('index.html', prediction_text = f'Price Score is {prediction}')
