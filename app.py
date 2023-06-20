@@ -1,4 +1,3 @@
-import numpy as np
 from flask import Flask, request, render_template
 import joblib
 
@@ -30,8 +29,16 @@ def home():
             model = joblib.load('static/model_ml/model_rf.pkl')
 
         prediction = model.predict(features)
+        if prediction[0] == 0:
+            result = 'Low'
+        elif prediction[0] == 1:
+            result = 'Medium'
+        elif prediction[0] == 2:
+            result = 'High'
+        elif prediction[0] == 3:
+            result = 'Very High'
 
-        return render_template('index.html', prediction_text = f'Price Score is {prediction}')
+        return render_template('index.html', prediction_text = f'Price Score is {result}')
     
     return render_template('index.html')   
 
